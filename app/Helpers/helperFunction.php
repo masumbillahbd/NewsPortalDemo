@@ -70,7 +70,6 @@ if(!function_exists('view_counter')){
         }
     }
 }
-
 function post_updated_by($id = 0){
     $user = User::where('id',$id)->first();
     if ($user != null) {
@@ -84,7 +83,6 @@ function post_updated_time($time = 0){
     }
     return null;
 }
-
 function menu_query($take=5, $skip=0, $order='asc'){
     if($take == 1){
         return Menu::OrderBy('position', $order)->skip($skip)->first();
@@ -108,7 +106,6 @@ function page_url($slug){
     }
     return null;   
 }
-
 function photo_query($take=1, $skip=0, $order='desc'){   
     if($take == 1){
         return Photo::orderBy('id', $order)->skip($skip)->first();
@@ -120,14 +117,12 @@ function photo_query($take=1, $skip=0, $order='desc'){
 function multiple_photo($photo_id){
     return Photobody::where('photo_id',$photo_id)->get();
 }
-
 function post_scroll_query($take=10, $skip=0, $order='desc'){
     return Post::where([['post_status', '1'],['scroll', '1']])->orderBy('id', $order)->select('id','headline','post_status','created_at')->skip($skip)->take($take)->get();
 }
 function post_query($take=10, $skip=0,$order='desc'){
     return Post::where('post_status', '1')->orderBy('id', $order)->select('id','headline','sub_headline','excerpt','featured_image','post_status','created_at')->skip($skip)->take($take)->get();
 }
-
 function ad_by_position($position = 1){
     return Ad::where('position', $position)->first();
 }
@@ -139,7 +134,6 @@ function ad_query($take=1, $skip=0, $order='asc'){
     }
     return null;
 }
-
 function posts_by_category($category_id, $take=10, $skip=0){
     $cat = Category::find($category_id);
     if(!empty($cat)){
@@ -151,7 +145,6 @@ function posts_by_category($category_id, $take=10, $skip=0){
     }
     return null;
 }
- 
 function posts_by_reporter($reporter_id, $take=10, $skip=0){
     return Post::where([['post_status', '1'],['reporter_id', $reporter_id]])->orderBy('created_at', 'desc')->select('id','headline','sub_headline','excerpt','featured_image','post_status','created_at')->skip($skip)->take($take)->paginate(20);
 }
@@ -172,7 +165,6 @@ function posts_by_sub_category($sub_category_id, $take=10, $skip=0){
     }
     return $posts_by_subcategory = null;
 } 
-
 function posts_by_tag($tag_id, $take = 8, $skip = 0){
     if ($take == 1) {
         $posts = Tag::find($tag_id)->Posts()->select('posts.id','posts.headline','posts.sub_headline','posts.excerpt','posts.featured_image','posts.post_status','posts.created_at')->where('post_status', '1')->orderBy('created_at', 'desc')->skip($skip)->take($take)->get();
@@ -184,19 +176,15 @@ function posts_by_tag($tag_id, $take = 8, $skip = 0){
     }
     return $posts = null;
 }
-
 function category_slug($id){
     return Category::find($id)->slug;
 }
-
 function category_name($id){
     return Category::findOrFail($id)->name;
 }
-
 function tag_name($id){
     return Tag::findOrFail($id)->name;
 }
-
 function category_url($id){
     return route('category.posts', ['category_slug' => Category::find($id)->slug ]);
 }
